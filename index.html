@@ -1,11 +1,758 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>hi there</p>
-</body>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI ON-U - 지능형 에이전트 솔루션</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #2563eb;
+        --primary-dark: #1e40af;
+        --secondary-color: #64748b;
+        --text-dark: #1f2937;
+        --text-light: #6b7280;
+        --bg-light: #f9fafb;
+        --bg-white: #ffffff;
+        --border-color: #e5e7eb;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        line-height: 1.6;
+      }
+
+      /* 레이아웃 */
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* 사이드바 */
+      .sidebar {
+        width: 280px;
+        background-color: var(--bg-white);
+        border-right: 1px solid var(--border-color);
+        padding: 24px 16px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow);
+      }
+
+      .sidebar-header {
+        margin-bottom: 32px;
+      }
+
+      .sidebar-logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary-color);
+        letter-spacing: -0.5px;
+      }
+
+      .sidebar-subtitle {
+        font-size: 12px;
+        color: var(--text-light);
+        margin-top: 4px;
+      }
+
+      .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .menu-item {
+        padding: 12px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 14px;
+        font-weight: 500;
+        border: none;
+        background: none;
+        text-align: left;
+        width: 100%;
+        color: var(--text-dark);
+      }
+
+      .menu-item:hover {
+        background-color: var(--bg-light);
+        color: var(--primary-color);
+      }
+
+      .menu-item.active {
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: var(--shadow);
+      }
+
+      /* 메인 콘텐츠 */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* 헤더 */
+      .header {
+        background-color: var(--bg-white);
+        border-bottom: 1px solid var(--border-color);
+        padding: 20px 32px;
+        box-shadow: var(--shadow);
+      }
+
+      .header-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 4px;
+      }
+
+      .header-subtitle {
+        font-size: 14px;
+        color: var(--text-light);
+      }
+
+      /* 콘텐츠 영역 */
+      .content {
+        flex: 1;
+        padding: 32px;
+        overflow-y: auto;
+      }
+
+      /* 페이지 섹션 */
+      .page-section {
+        display: none;
+      }
+
+      .page-section.active {
+        display: block;
+        animation: fadeIn 0.3s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* 메인 페이지 */
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        padding: 60px 40px;
+        border-radius: 16px;
+        margin-bottom: 32px;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .hero-title {
+        font-size: 40px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        line-height: 1.2;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+        opacity: 0.95;
+        margin-bottom: 32px;
+        line-height: 1.6;
+      }
+
+      .video-container {
+        background-color: #000;
+        aspect-ratio: 16 / 9;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        margin-top: 24px;
+      }
+
+      .video-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* 카드 그리드 */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin-top: 32px;
+      }
+
+      .card {
+        background-color: var(--bg-white);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary-color);
+      }
+
+      .card-icon {
+        font-size: 32px;
+        margin-bottom: 12px;
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+      }
+
+      .card-description {
+        font-size: 14px;
+        color: var(--text-light);
+        line-height: 1.5;
+      }
+
+      /* 상세 페이지 */
+      .detail-content {
+        max-width: 1000px;
+      }
+
+      .detail-header {
+        margin-bottom: 32px;
+      }
+
+      .detail-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+      }
+
+      .detail-meta {
+        font-size: 14px;
+        color: var(--text-light);
+        display: flex;
+        gap: 16px;
+      }
+
+      .detail-video {
+        background-color: #000;
+        aspect-ratio: 16 / 9;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 32px;
+      }
+
+      .detail-video iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .detail-description {
+        background-color: var(--bg-white);
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        margin-bottom: 24px;
+      }
+
+      .detail-description h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--text-dark);
+      }
+
+      .detail-description p {
+        font-size: 14px;
+        color: var(--text-light);
+        line-height: 1.7;
+        margin-bottom: 12px;
+      }
+
+      .detail-description ul {
+        list-style-position: inside;
+        margin-left: 0;
+      }
+
+      .detail-description li {
+        font-size: 14px;
+        color: var(--text-light);
+        margin-bottom: 8px;
+        line-height: 1.6;
+      }
+
+      /* 버튼 */
+      .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+      }
+
+      /* 반응형 */
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          height: auto;
+          position: static;
+          border-right: none;
+          border-bottom: 1px solid var(--border-color);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .sidebar-menu {
+          flex-direction: row;
+          gap: 4px;
+        }
+
+        .menu-item {
+          padding: 8px 12px;
+          font-size: 12px;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        .hero-section {
+          padding: 40px 20px;
+        }
+
+        .hero-title {
+          font-size: 28px;
+        }
+
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* 스크롤바 스타일 */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-light);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-light);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 사이드바 -->
+      <!-- <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-logo">AI ON-U</div>
+          <div class="sidebar-subtitle">지능형 에이전트</div>
+        </div>
+        <nav class="sidebar-menu">
+          <button class="menu-item active" data-page="main">시연 영상</button>
+          <button class="menu-item" data-page="detail-1">
+            지식생성 - 새마을금고PMS
+          </button>
+          <button class="menu-item" data-page="detail-2">
+            지식에이전트 - 새마을금고PMS
+          </button>
+          <button class="menu-item" data-page="detail-3">
+            분석에이전트 - LFmall
+          </button>
+          <button class="menu-item" data-page="detail-4">
+            커스텀에이전트 - 한빛테크
+          </button>
+        </nav>
+      </aside> -->
+
+      <!-- 메인 콘텐츠 -->
+      <main class="main-content">
+        <!-- 헤더 -->
+        <!-- <header class="header">
+          <h1 class="header-title" id="pageTitle">AI ON-U 시연 영상</h1>
+          <p class="header-subtitle" id="pageSubtitle">
+            지능형 에이전트 솔루션 소개
+          </p>
+        </header> -->
+
+        <!-- 콘텐츠 -->
+        <section class="content">
+          <!-- 메인 페이지 -->
+          <div id="main" class="page-section active">
+            <div class="hero-section">
+              <h2 class="hero-title">AI ON-U</h2>
+              <p class="hero-subtitle">
+                기업의 지식과 데이터를 활용한<br />
+                지능형 에이전트 솔루션
+              </p>
+            </div>
+
+            <div class="cards-grid">
+              <div class="card" data-page="detail-1">
+                <div class="card-icon">📚</div>
+                <h3 class="card-title">지식생성</h3>
+                <p class="card-description">
+                  새마을금고의 지식(더미데이터)을 자동으로 생성하고 관리하는
+                  에이전트
+                </p>
+              </div>
+
+              <div class="card" data-page="detail-2">
+                <div class="card-icon">🤖</div>
+                <h3 class="card-title">지식에이전트</h3>
+                <p class="card-description">
+                  생성된 지식 기반에서 사용자 질문에 답변하는 지능형 에이전트
+                </p>
+              </div>
+
+              <div class="card" data-page="detail-3">
+                <div class="card-icon">📊</div>
+                <h3 class="card-title">분석에이전트</h3>
+                <p class="card-description">
+                  LFmall 데이터를 분석하여 인사이트를 제공하는 에이전트
+                </p>
+              </div>
+
+              <div class="card" data-page="detail-4">
+                <div class="card-icon">⚙️</div>
+                <h3 class="card-title">커스텀에이전트</h3>
+                <p class="card-description">
+                  한빛테크의 특화된 요구사항에 맞춘 맞춤형 에이전트 구성
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 상세 페이지 1 -->
+          <div id="detail-1" class="page-section">
+            <div class="detail-content">
+              <div class="detail-header">
+                <h2 class="detail-title">지식생성</h2>
+                <p class="detail-meta">새마을금고</p>
+              </div>
+
+              <div class="detail-video">
+                <iframe
+                  src="https://naver.me/FOZE5wST"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+
+              <div class="detail-description">
+                <h3>개요</h3>
+                <p>
+                  새마을금고(더미데이터)의 문서를 업로드&청킹&임베딩 합니다.
+                </p>
+
+                <h3 style="margin-top: 20px">주요 기능</h3>
+                <ul>
+                  <li>
+                    새마을 금고 IT센터 전산관리자 메뉴얼(가상으로 만든) MD파일을
+                    통한 지식생성(지식 에이전트와 연동하기 위한 지식생성) →
+                    RAG기반 메뉴얼 검색 AI 솔루션 생성을 위한 지식생성
+                  </li>
+                  <li>
+                    특정 세그먼트(<!—pageBreak—>), 청크길이, 청크 오버랩 지정을
+                    통해 청크 미리보기 기능 지원
+                  </li>
+                  <li>
+                    여러 검색 기능 지원 - 백터 검색 / 키워드 검색 / 하이브리드
+                    검색
+                  </li>
+                  <li>Reranking 시, top K 개수 지정 가능</li>
+                  <li>
+                    청킹&임베딩이 완료 후 추출된 키워드와 함께 결과물 미리보기
+                    기능 지원
+                  </li>
+                  <li>
+                    ‘조회 테스트’ 기능을 통해 결과물이 얼마나 잘 검색되어지는 지
+                    테스트 가능. 1.0을 만점으로 score 확인 가능
+                  </li>
+                </ul>
+
+                <h3 style="margin-top: 20px">기대 효과</h3>
+                <p>
+                  시스템의 지식 관리 자동화로 운영 효율성을 높이고, 일관되고
+                  정확한 정보 제공이 가능합니다.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 상세 페이지 2 -->
+          <div id="detail-2" class="page-section">
+            <div class="detail-content">
+              <div class="detail-header">
+                <h2 class="detail-title">지식에이전트</h2>
+                <p class="detail-meta">새마을금고</p>
+              </div>
+
+              <div class="detail-video">
+                <iframe
+                  src="https://naver.me/FLegG3cs"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+
+              <div class="detail-description">
+                <h3>개요</h3>
+                <p>
+                  지식생성 에이전트로부터 생성된 지식 기반을 활용하여 사용자의
+                  자연어 질문에 대해 정확한 답변을 제공하는 지능형
+                  에이전트입니다.
+                </p>
+
+                <h3 style="margin-top: 20px">주요 기능</h3>
+                <ul>
+                  <li>💬 자연어 질문 이해 및 처리</li>
+                  <li>🎯 관련 지식 검색 및 매칭</li>
+                  <li>📝 맥락 기반 답변 생성</li>
+                  <li>⭐ 사용자 피드백 학습</li>
+                </ul>
+
+                <h3 style="margin-top: 20px">기대 효과</h3>
+                <p>
+                  사용자 질문에 실시간으로 정확한 답변을 제공하여 업무 효율성을
+                  크게 향상시킵니다.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 상세 페이지 3 -->
+          <div id="detail-3" class="page-section">
+            <div class="detail-content">
+              <div class="detail-header">
+                <h2 class="detail-title">분석에이전트</h2>
+                <p class="detail-meta">LFmall 시스템</p>
+              </div>
+
+              <div class="detail-video">
+                <iframe
+                  src="https://naver.me/5QiQOlf8"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+
+              <div class="detail-description">
+                <h3>개요</h3>
+                <p>
+                  LFmall의 대량의 비즈니스 데이터를 분석하여 의미 있는
+                  인사이트와 트렌드를 자동으로 추출하는 지능형 에이전트입니다.
+                </p>
+
+                <h3 style="margin-top: 20px">주요 기능</h3>
+                <ul>
+                  <li>📈 데이터 트렌드 분석</li>
+                  <li>🎯 패턴 인식 및 이상 감지</li>
+                  <li>📊 자동 리포트 생성</li>
+                  <li>💡 예측 분석 및 권장사항</li>
+                </ul>
+
+                <h3 style="margin-top: 20px">기대 효과</h3>
+                <p>
+                  데이터 기반 의사결정이 가능해지며, 비즈니스 인사이트를
+                  신속하게 파악할 수 있습니다.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 상세 페이지 4 -->
+          <div id="detail-4" class="page-section">
+            <div class="detail-content">
+              <div class="detail-header">
+                <h2 class="detail-title">커스텀에이전트</h2>
+                <p class="detail-meta">한빛테크 시스템</p>
+              </div>
+
+              <div class="detail-video">
+                <iframe
+                  src="https://naver.me/50J9Cub2"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+
+              <div class="detail-description">
+                <h3>개요</h3>
+                <p>
+                  한빛테크의 특화된 비즈니스 요구사항과 시스템 환경에 맞춘 완전
+                  맞춤형 에이전트 솔루션입니다.
+                </p>
+
+                <h3 style="margin-top: 20px">주요 기능</h3>
+                <ul>
+                  <li>⚙️ 맞춤형 워크플로우 구성</li>
+                  <li>🔌 기존 시스템 통합</li>
+                  <li>🎨 UI/UX 커스터마이징</li>
+                  <li>🔐 보안 및 권한 관리</li>
+                </ul>
+
+                <h3 style="margin-top: 20px">기대 효과</h3>
+                <p>
+                  한빛테크의 고유한 비즈니스 프로세스에 완벽하게 적합한
+                  에이전트로 운영 효율성을 극대화합니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      // 페이지 데이터
+      const pages = {
+        main: {
+          title: "AI ON-U 시연 영상",
+          subtitle: "지능형 에이전트 솔루션 소개",
+        },
+        "detail-1": {
+          title: "지식생성",
+          subtitle: "새마을금고",
+        },
+        "detail-2": {
+          title: "지식에이전트",
+          subtitle: "새마을금고",
+        },
+        "detail-3": {
+          title: "분석에이전트",
+          subtitle: "LFmall 시스템",
+        },
+        "detail-4": {
+          title: "커스텀에이전트",
+          subtitle: "한빛테크 시스템",
+        },
+      };
+
+      // DOM 요소 캐싱
+      const menuItems = document.querySelectorAll(".menu-item");
+      const pageSections = document.querySelectorAll(".page-section");
+      const pageTitle = document.getElementById("pageTitle");
+      const pageSubtitle = document.getElementById("pageSubtitle");
+      const cards = document.querySelectorAll(".card");
+
+      // 페이지 전환 함수
+      function navigateToPage(pageId) {
+        // 모든 페이지 섹션 숨기기
+        pageSections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // 모든 메뉴 항목 비활성화
+        menuItems.forEach((item) => {
+          item.classList.remove("active");
+        });
+
+        // 선택한 페이지 표시
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+          targetPage.classList.add("active");
+        }
+
+        // 선택한 메뉴 항목 활성화
+        const activeMenuItem = document.querySelector(
+          `[data-page="${pageId}"]`
+        );
+        if (activeMenuItem) {
+          activeMenuItem.classList.add("active");
+        }
+
+        // 헤더 정보 업데이트
+        if (pages[pageId]) {
+          pageTitle.textContent = pages[pageId].title;
+          pageSubtitle.textContent = pages[pageId].subtitle;
+        }
+
+        // 페이지 상단으로 스크롤
+        document.querySelector(".content").scrollTop = 0;
+      }
+
+      // 메뉴 항목 클릭 이벤트
+      menuItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          const pageId = e.target.getAttribute("data-page");
+          navigateToPage(pageId);
+        });
+      });
+
+      // 카드 클릭 이벤트
+      cards.forEach((card) => {
+        card.addEventListener("click", (e) => {
+          const pageId = e.currentTarget.getAttribute("data-page");
+          navigateToPage(pageId);
+        });
+      });
+
+      // 초기 페이지 설정
+      document.addEventListener("DOMContentLoaded", () => {
+        navigateToPage("main");
+      });
+    </script>
+  </body>
 </html>
