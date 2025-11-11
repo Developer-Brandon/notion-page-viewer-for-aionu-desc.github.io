@@ -431,7 +431,64 @@
         content: "←";
         font-size: 16px;
       }
+
+      .download-section {
+        margin-bottom: 32px;
+      }
+
+      .download-placeholder {
+        background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+        border: 2px dashed var(--primary-color);
+        border-radius: 12px;
+        padding: 40px;
+        text-align: center;
+      }
+
+      .download-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      .download-placeholder h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+      }
+
+      .download-placeholder p {
+        font-size: 14px;
+        color: var(--text-light);
+        margin-bottom: 10px;
+      }
+
+      .download-button {
+        display: inline-block;
+        padding: 12px 32px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        cursor: pointer;
+      }
+
+      .download-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+      }
+
+      .download-button:active {
+        transform: translateY(0);
+      }
     </style>
+    <script src="//fast.wistia.net/assets/external/E-v1.js" async></script>
   </head>
   <body>
     <div class="container">
@@ -444,16 +501,16 @@
         <nav class="sidebar-menu">
           <button class="menu-item active" data-page="main">시연 영상</button>
           <button class="menu-item" data-page="detail-1">
-            지식생성 - 새마을금고PMS
+            지식생성 - DS은행PMS
           </button>
           <button class="menu-item" data-page="detail-2">
-            지식에이전트 - 새마을금고PMS
+            지식에이전트 - DS은행PMS
           </button>
           <button class="menu-item" data-page="detail-3">
             분석에이전트 - LFmall
           </button>
           <button class="menu-item" data-page="detail-4">
-            커스텀에이전트 - 한빛테크
+            커스텀에이전트 - DS테크
           </button>
         </nav>
       </aside> -->
@@ -486,8 +543,7 @@
                 <div class="card-icon">📚</div>
                 <h3 class="card-title">지식생성</h3>
                 <p class="card-description">
-                  새마을금고의 지식(더미데이터)을 자동으로 생성하고 관리하는
-                  에이전트
+                  DS은행의 지식을 자동으로 생성하고 관리하는 에이전트
                 </p>
               </div>
 
@@ -511,7 +567,7 @@
                 <div class="card-icon">⚙️</div>
                 <h3 class="card-title">커스텀에이전트</h3>
                 <p class="card-description">
-                  한빛테크의 특화된 요구사항에 맞춘 맞춤형 에이전트 구성
+                  DS테크의 특화된 요구사항에 맞춘 맞춤형 에이전트 구성
                 </p>
               </div>
             </div>
@@ -523,37 +579,30 @@
               <div class="detail-header">
                 <button class="back-button" onclick="goBack()">목록으로</button>
                 <h2 class="detail-title">지식생성</h2>
-                <p class="detail-meta">새마을금고</p>
+                <p class="detail-meta">DS은행</p>
               </div>
 
-              <div class="detail-video">
-                <iframe
-                  src="//fast.wistia.net/embed/iframe/a74mrwu4wi"
-                  allowtransparency="true"
-                  frameborder="0"
-                  scrolling="no"
-                  class="wistia_embed"
-                  name="wistia_embed"
-                  allowfullscreen
-                  mozallowfullscreen
-                  webkitallowfullscreen
-                  allowfullscreen
-                  msallowfullscreen
-                  width="620"
-                  height="349"
-                >
-                </iframe>
-                <script
-                  src="//fast.wistia.net/assets/external/E-v1.js"
-                  async
-                ></script>
+              <!-- iframe 제거하고 이것으로 교체 -->
+              <div class="download-section">
+                <div class="download-placeholder">
+                  <div class="download-icon">📥</div>
+                  <h3>동영상 다운로드</h3>
+                  <p>아래 버튼을 클릭하여 동영상을 다운로드하세요</p>
+                  <a
+                    href="
+https://fs.mybox.naver.com/file/download.api?resourceKey=bG92ZWZpbmFuY2V8MzQ3MjU5NDk4OTc1OTE0OTkxMnxGfDA&svcType=MYBOX-WEB"
+                    class="download-button"
+                    download
+                  >
+                    <span>다운로드</span>
+                  </a>
+                </div>
               </div>
-
               <div class="detail-description">
                 <h3>개요</h3>
                 <p>
-                  새마을금고(더미데이터)의 문서를 업로드&청킹&임베딩하고
-                  미리보기 할 수 있는 메뉴입니다.
+                  DS은행의 문서를 업로드&청킹&임베딩하고 미리보기 할 수 있는
+                  메뉴입니다.
                 </p>
 
                 <h3 style="margin-top: 20px">주요 기능</h3>
@@ -591,7 +640,7 @@
               <div class="detail-header">
                 <button class="back-button" onclick="goBack()">목록으로</button>
                 <h2 class="detail-title">지식에이전트</h2>
-                <p class="detail-meta">새마을금고</p>
+                <p class="detail-meta">DS은행</p>
               </div>
 
               <div class="detail-video">
@@ -614,8 +663,8 @@
                 <ul>
                   <li>
                     AgentBuilder 메뉴에서 에이전트 C/R/U/D 기능 지원 →
-                    새마을금고IT센터 전산메뉴얼 검색 솔루션(RAG기반 메뉴얼 검색
-                    AI 솔루션)
+                    DS은행IT센터 전산메뉴얼 검색 솔루션(RAG기반 메뉴얼 검색 AI
+                    솔루션)
                   </li>
                   <li>
                     ‘프롬프트(지침)’을 지정하여 질의에 대한 특이사항을 지정하여
@@ -644,7 +693,7 @@
               <div class="detail-header">
                 <button class="back-button" onclick="goBack()">목록으로</button>
                 <h2 class="detail-title">분석에이전트</h2>
-                <p class="detail-meta">LFmall 시스템</p>
+                <p class="detail-meta">DS몰 시스템</p>
               </div>
 
               <div class="detail-video">
@@ -659,15 +708,15 @@
               <div class="detail-description">
                 <h3>개요</h3>
                 <p>
-                  LFmall의 대량의 비즈니스 데이터를 분석하여 상품을 추천해주는
-                  AI 분석 에이전트입니다.
+                  DS몰의 대량의 비즈니스 데이터를 분석하여 상품을 추천해주는 AI
+                  분석 에이전트입니다.
                 </p>
 
                 <h3 style="margin-top: 20px">주요 기능</h3>
                 <ul>
                   <li>
-                    AgentBuilder 메뉴에서 분석 에이전트 C/R/U/D 기능 지원 → LF
-                    MALL 상품 추천 AI솔루션
+                    AgentBuilder 메뉴에서 분석 에이전트 C/R/U/D 기능 지원 → DS
+                    몰 상품 추천 AI솔루션
                   </li>
                   <li>
                     앞선 지식에이전트와는 다르게 Excel과 같은 csv 파일의 row와
@@ -689,7 +738,7 @@
               <div class="detail-header">
                 <button class="back-button" onclick="goBack()">목록으로</button>
                 <h2 class="detail-title">커스텀에이전트</h2>
-                <p class="detail-meta">한빛테크 시스템</p>
+                <p class="detail-meta">DS테크 시스템</p>
               </div>
 
               <div class="detail-video">
@@ -712,8 +761,8 @@
                 <ul>
                   <li>
                     AgentBuilder 메뉴에서 커스텀 에이전트 C/R/U/D 기능 지원 -
-                    한빛테크(제조업회사) 노무/인사정보 조회 및 제조/설비
-                    안전관리 메뉴얼 관리 AI 솔루션
+                    DS테크(제조업회사) 노무/인사정보 조회 및 제조/설비 안전관리
+                    메뉴얼 관리 AI 솔루션
                   </li>
                   <li>
                     자유도 높게 여러가지 tool을 활용하여 마우스 클릭만으로
@@ -758,19 +807,19 @@
         },
         "detail-1": {
           title: "지식생성",
-          subtitle: "새마을금고 PMS 시스템",
+          subtitle: "DS은행 AI솔루션",
         },
         "detail-2": {
           title: "지식에이전트",
-          subtitle: "새마을금고 PMS 시스템",
+          subtitle: "DS은행 AI솔루션",
         },
         "detail-3": {
           title: "분석에이전트",
-          subtitle: "LFmall 시스템",
+          subtitle: "DS몰 시스템",
         },
         "detail-4": {
           title: "커스텀에이전트",
-          subtitle: "한빛테크 시스템",
+          subtitle: "DS테크 시스템",
         },
       };
 
